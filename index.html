@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIGHTVERSE: 3000</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="antialiased selection:bg-sky-500 selection:text-white" data-theme="default">
+
+    <!-- INTRO SEQUENCE (BOOT) -->
+    <div id="intro-screen">
+        <div id="intro-content">
+            <div class="intro-logo">LIGHTVERSE</div>
+            <div class="intro-loader">
+                <div class="intro-bar"></div>
+            </div>
+            <div class="intro-sub">SİSTEM BAŞLATILIYOR... %100</div>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 flex items-center justify-center p-4">
+        <div class="settings-panel glass-panel w-full max-w-md p-8 rounded-2xl relative">
+            <button onclick="Settings.toggle()"
+                class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h2 class="text-2xl font-bold mb-6 font-mono tracking-tighter">SİSTEM AYARLARI</h2>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Görünüm
+                        Teması</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="Settings.setTheme('default')"
+                            class="p-3 rounded border border-slate-200 hover:border-sky-500 transition text-left text-sm font-bold bg-white text-slate-900">
+                            <div
+                                class="w-4 h-4 rounded-full bg-slate-100 border border-slate-300 inline-block mr-2 align-middle">
+                            </div> Aydınlık
+                        </button>
+                        <button onclick="Settings.setTheme('titanium')"
+                            class="p-3 rounded border border-slate-700 hover:border-sky-500 transition text-left text-sm font-bold bg-slate-800 text-white">
+                            <div
+                                class="w-4 h-4 rounded-full bg-slate-700 border border-slate-500 inline-block mr-2 align-middle">
+                            </div> Titanyum
+                        </button>
+                        <button onclick="Settings.setTheme('midnight')"
+                            class="p-3 rounded border border-slate-800 hover:border-indigo-500 transition text-left text-sm font-bold bg-black text-slate-200">
+                            <div
+                                class="w-4 h-4 rounded-full bg-slate-900 border border-slate-700 inline-block mr-2 align-middle">
+                            </div> Gece Yarısı
+                        </button>
+                        <button onclick="Settings.setTheme('cyber')"
+                            class="p-3 rounded border border-cyan-900 hover:border-pink-500 transition text-left text-sm font-bold bg-slate-900 text-cyan-400">
+                            <div
+                                class="w-4 h-4 rounded-full bg-slate-900 border border-cyan-500 inline-block mr-2 align-middle">
+                            </div> Siberpunk
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Grafik
+                        Kalitesi</label>
+                    <input type="range" min="0" max="2" step="1" class="w-full"
+                        onchange="Settings.setQuality(this.value)">
+                    <div class="flex justify-between text-[10px] font-mono text-slate-400 mt-1">
+                        <span>DÜŞÜK</span>
+                        <span>ORTA</span>
+                        <span>ULTRA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-700 text-center">
+                <span class="text-[10px] font-mono text-slate-500">LIGHTVERSE OS V3.0 // BUILD 2026.02.07</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="nav-panel fixed top-0 w-full z-40 h-16 flex items-center justify-between px-6 md:px-12">
+        <div class="flex items-center gap-4 select-none cursor-pointer" onclick="App.go('home')">
+            <div
+                class="w-10 h-10 bg-gradient-to-br from-sky-400 to-sky-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-sky-500/30">
+                <i class="fa-solid fa-cube text-lg"></i>
+            </div>
+            <div>
+                <div class="font-extrabold text-xl tracking-tight leading-none logo-text">LIGHTVERSE</div>
+                <div class="text-[9px] font-mono opacity-60 tracking-wider">FEN BİLİMLERİ 7.5</div>
+            </div>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex gap-6">
+                <button onclick="App.go('home')"
+                    class="text-xs font-bold opacity-60 hover:opacity-100 transition uppercase tracking-widest hover:text-sky-500">Ana
+                    Menü</button>
+                <button onclick="App.go('lab')"
+                    class="text-xs font-bold opacity-60 hover:opacity-100 transition uppercase tracking-widest hover:text-sky-500">Simülasyon</button>
+            </div>
+            <div class="w-px h-8 bg-slate-200/20 mx-2"></div>
+            <button onclick="Settings.toggle()"
+                class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition">
+                <i class="fa-solid fa-gear text-slate-400 hover:text-sky-500 transition"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-16 h-screen w-full relative">
+
+        <!-- HOME -->
+        <section id="view-home"
+            class="view-section grid place-content-center h-full p-8 transition-opacity duration-500">
+            <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+
+                <!-- Left: Hero Text -->
+                <div class="space-y-10">
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-500 text-[10px] font-bold tracking-widest uppercase backdrop-blur-sm">
+                        <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+                        Sistem Çevrimiçi V.3000
+                    </div>
+
+                    <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85]">
+                        FİZİK<br><span class="opacity-30">SİM.</span>
+                    </h1>
+
+                    <p class="text-xl opacity-70 leading-relaxed font-light border-l-4 border-sky-500 pl-6 max-w-lg">
+                        Işığın madde ile etkileşimini keşfetmek için tasarlanmış yeni nesil deney laboratuvarı.
+                    </p>
+
+                    <button onclick="App.go('lab')"
+                        class="group relative px-10 py-5 bg-sky-600 text-white font-mono text-sm overflow-hidden rounded-xl shadow-xl shadow-sky-600/20 hover:shadow-sky-600/40 transition-all">
+                        <span
+                            class="relative z-10 font-bold group-hover:tracking-widest transition-all duration-300">SİMÜLASYONU
+                            BAŞLAT</span>
+                        <div
+                            class="absolute inset-0 bg-white/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Right: Module Cards -->
+                <div class="space-y-6 perspective-1000">
+                    <button data-nav="lab" class="tech-card w-full p-10 text-left group">
+                        <div class="flex justify-between items-start mb-6">
+                            <span
+                                class="font-mono text-[10px] text-sky-500 tracking-widest bg-sky-500/10 px-2 py-1 rounded">MODÜL_01</span>
+                            <i
+                                class="fa-solid fa-flask text-2xl opacity-20 group-hover:opacity-100 group-hover:text-sky-500 transition-all transform group-hover:rotate-12"></i>
+                        </div>
+                        <h2 class="text-4xl font-bold mb-3 tracking-tight">Deney Odası</h2>
+                        <p class="text-sm opacity-60 group-hover:opacity-90 transition leading-relaxed">Soğurulma,
+                            Aynalar, Mercekler ve Prizma deneylerini interaktif ortamda gerçekleştirin.</p>
+                    </button>
+
+                    <button data-nav="quiz" class="tech-card w-full p-10 text-left group"
+                        style="animation-delay: 0.1s;">
+                        <div class="flex justify-between items-start mb-6">
+                            <span
+                                class="font-mono text-[10px] text-purple-500 tracking-widest bg-purple-500/10 px-2 py-1 rounded">MODÜL_02</span>
+                            <i
+                                class="fa-solid fa-certificate text-2xl opacity-20 group-hover:opacity-100 group-hover:text-purple-500 transition-all transform group-hover:rotate-12"></i>
+                        </div>
+                        <h2 class="text-4xl font-bold mb-3 tracking-tight">Başarı Testi</h2>
+                        <p class="text-sm opacity-60 group-hover:opacity-90 transition leading-relaxed">25 Soruluk
+                            kapsamlı testi tamamlayın ve Dijital Başarı Sertifikanızı kazanın.</p>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LAB -->
+        <section id="view-lab"
+            class="view-section hidden h-full w-full flex flex-col md:flex-row gap-6 p-6 opacity-0 transition-opacity duration-500">
+
+            <!-- Sidebar -->
+            <aside class="glass-panel w-full md:w-80 rounded-2xl p-6 flex flex-col h-full shadow-2xl">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="text-[10px] font-bold opacity-40 uppercase tracking-widest">Kontrol Paneli</div>
+                    <div class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_theme('colors.green.500')]"></div>
+                </div>
+
+                <div class="flex flex-col gap-2 overflow-y-auto max-h-[40%] flex-shrink-0 mb-8 pr-2 custom-scroll">
+                    <button onclick="Lab.setMode('absorption')" data-mode="absorption" class="lab-btn active">01.
+                        SOĞURULMA</button>
+                    <button onclick="Lab.setMode('mirrors')" data-mode="mirrors" class="lab-btn">02. AYNALAR</button>
+                    <button onclick="Lab.setMode('lenses')" data-mode="lenses" class="lab-btn">03. MERCEKLER</button>
+                    <button onclick="Lab.setMode('prism')" data-mode="prism" class="lab-btn">04. PRİZMA</button>
+                    <button onclick="Lab.setMode('shadows')" data-mode="shadows" class="lab-btn">05. GÖLGELER</button>
+                    <button onclick="Lab.setMode('mixing')" data-mode="mixing" class="lab-btn">06. RENKLER</button>
+                </div>
+
+                <div class="border-t border-slate-500/20 pt-6 flex-1 flex flex-col min-h-0">
+                    <div class="text-[10px] font-bold opacity-40 uppercase tracking-widest mb-6">Değişkenler</div>
+                    <div id="lab-controls" class="flex-1 overflow-y-auto space-y-6 pr-2 custom-scroll">
+                        <!-- JS Injected Controls -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Canvas -->
+            <div class="glass-panel flex-1 rounded-2xl relative overflow-hidden shadow-2xl">
+                <div class="absolute top-6 left-6 z-10 font-mono text-[10px] opacity-30 select-none tracking-widest">
+                    RENDER_ENGINE_V3000 // ACTIVE
+                </div>
+                <div class="absolute top-6 right-6 z-10 flex gap-2">
+                    <button onclick="Lab.reset()"
+                        class="w-8 h-8 rounded bg-white/5 hover:bg-white/20 flex items-center justify-center transition text-white/50 hover:text-white">
+                        <i class="fa-solid fa-rotate-left text-xs"></i>
+                    </button>
+                    <button onclick="Lab.snapshot()"
+                        class="w-8 h-8 rounded bg-white/5 hover:bg-white/20 flex items-center justify-center transition text-white/50 hover:text-white">
+                        <i class="fa-solid fa-camera text-xs"></i>
+                    </button>
+                </div>
+                <canvas id="lab-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+            </div>
+
+        </section>
+
+        <!-- QUIZ -->
+        <section id="view-quiz"
+            class="view-section hidden h-full w-full flex items-center justify-center p-8 transition-opacity duration-500">
+            <div id="quiz-mount" class="w-full flex justify-center"></div>
+        </section>
+
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
